@@ -1,34 +1,51 @@
-import { toggleComplete } from "./api/todoApi";
+import { deleteTodo, toggleComplete } from "./api/todoApi";
 import type { ITodo } from "./types/ITodo";
 
 export const TodoItem = ({
   todo,
   setTodos,
-  todos,
 }: {
   todo: ITodo;
   setTodos: React.Dispatch<React.SetStateAction<ITodo[]>>;
-  todos: ITodo[];
 }) => {
   const { id, task, completed } = todo;
 
   const handleToggleClick = async () => {
     const toggled = await toggleComplete(id);
     if (toggled) {
-      const newTodos = todos.map((todo) => {
-        if (todo.id === id) {
-          return toggled;
-        } else {
-          return todo;
-        }
+      setTodos((prev) => {
+        const next = prev.map((todo) => {
+          if (todo.id === id) {
+            return toggled;
+          } else {
+            return todo;
+          }
+        });
+        return next;
       });
-      setTodos(newTodos);
     }
   };
 
+  const handleDeleteClick = async () => {
+    const deleted = await deleteTodo(id);
+
+    if (!deleted) {
+      console.log("Something went wrong when deleting the task");
+      return;
+    }
+
+    setTodos((prev) => {
+      const next = prev.filter((todo) => todo.id !== deleted.id);
+      return next;
+    });
+  };
+
   return (
-    <li onClick={handleToggleClick}>
-      {task} {completed ? "✅" : "❌"}
+    <li>
+      <div onClick={handleToggleClick}>
+        {task} {completed ? "✅" : "❌"}
+      </div>
+      <button onClick={handleDeleteClick}>Delete</button>
     </li>
   );
 };

@@ -49,3 +49,18 @@ export const createTodo = async (task: string) => {
     return null;
   }
 };
+
+interface IDeleteTodoData {
+  success: true;
+  deleted: ITodo;
+}
+
+export const deleteTodo = async (id: string) => {
+  try {
+    const response = await todoAxios.delete<IDeleteTodoData>(`/todos/${id}`);
+    return response.data.deleted;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

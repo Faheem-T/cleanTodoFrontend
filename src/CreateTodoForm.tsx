@@ -16,8 +16,11 @@ export const CreateTodoForm = ({
   setTodos: React.Dispatch<React.SetStateAction<ITodo[]>>;
 }): ReactNode => {
   const [newTask, setNewTask] = useState("");
+
   const onSubmit = async (e: FormEvent<TodoFormElements>) => {
     e.preventDefault();
+
+    if (!newTask.trim()) return;
 
     const newTodo = await createTodo(newTask);
     if (!newTodo) {
@@ -31,6 +34,7 @@ export const CreateTodoForm = ({
       setNewTask("");
     }
   };
+
   return (
     <form onSubmit={onSubmit}>
       <input

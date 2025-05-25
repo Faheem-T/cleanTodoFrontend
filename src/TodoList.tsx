@@ -13,7 +13,7 @@ export const TodoList = () => {
     })();
   }, []);
   const renderedTodos = todos.map((todo) => (
-    <TodoItem todo={todo} todos={todos} setTodos={setTodos} key={todo.id} />
+    <TodoItem todo={todo} setTodos={setTodos} key={todo.id} />
   ));
   return (
     <>
