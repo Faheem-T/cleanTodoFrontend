@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ITodo } from "./types/ITodo";
 import { getTodos, toggleComplete } from "./api/todoApi";
+import { CreateTodoForm } from "./CreateTodoForm";
 
 export const TodoList = () => {
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -30,5 +31,10 @@ export const TodoList = () => {
       {task} {completed ? "✅" : "❌"}
     </li>
   ));
-  return <ul>{renderedTodos}</ul>;
+  return (
+    <>
+      <ul>{renderedTodos}</ul>
+      <CreateTodoForm setTodos={setTodos} />
+    </>
+  );
 };

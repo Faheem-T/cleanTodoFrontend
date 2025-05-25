@@ -35,3 +35,17 @@ export const toggleComplete = async (id: string) => {
     return null;
   }
 };
+
+interface ICreateTodoData {
+  todo: ITodo;
+}
+
+export const createTodo = async (task: string) => {
+  try {
+    const response = await todoAxios.post<ICreateTodoData>("/todos", { task });
+    return response.data.todo;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
