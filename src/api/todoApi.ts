@@ -64,3 +64,20 @@ export const deleteTodo = async (id: string) => {
     return null;
   }
 };
+
+interface IUpdateTodoData {
+  success: true;
+  updated: ITodo;
+}
+
+export const updateTodo = async (id: string, task: string) => {
+  try {
+    const response = await todoAxios.patch<IUpdateTodoData>(`/todos/${id}`, {
+      task,
+    });
+    return response.data.updated;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

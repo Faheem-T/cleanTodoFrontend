@@ -16,9 +16,9 @@ export const TodoList = () => {
     <TodoItem todo={todo} setTodos={setTodos} key={todo.id} />
   ));
   return (
-    <>
-      <ul>{renderedTodos}</ul>
+    <div className="flex flex-col items-center justify-center gap-3">
+      <ul className="flex flex-col gap-3">{renderedTodos}</ul>
       <CreateTodoForm setTodos={setTodos} />
-    </>
+    </div>
   );
 };
