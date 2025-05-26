@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { deleteTodo, toggleComplete, updateTodo } from "./api/todoApi";
 import type { ITodo } from "./types/ITodo";
+import { CButton } from "./components/Button";
 
 export const TodoItem = ({
   todo,
@@ -64,50 +65,47 @@ export const TodoItem = ({
   };
 
   return (
-    <li className="flex gap-2">
+    <li className="flex gap-2 w-full">
       {!editing ? (
-        <>
-          <span onClick={handleToggleClick}>
+        <div className="flex justify-between w-full">
+          <div onClick={handleToggleClick}>
             {task} {completed ? "✅" : "❌"}
-          </span>
-          <button
-            onClick={handleDeleteClick}
-            className="border border-red-600 p-0.5"
-          >
-            Delete
-          </button>
-          <button
-            onClick={() => {
-              setEditing((prev) => !prev);
-            }}
-            className="border border-black p-0.5"
-          >
-            Edit
-          </button>
-        </>
+          </div>
+          <div>
+            <CButton onClick={handleDeleteClick}>🗑</CButton>
+            <CButton
+              onClick={() => {
+                setEditing((prev) => !prev);
+              }}
+            >
+              🖊️
+            </CButton>
+          </div>
+        </div>
       ) : (
-        <>
+        <form
+          className="flex justify-between w-full"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <input
             value={task}
             onChange={(e) => {
               setCurrTask(e.target.value);
             }}
           />
-          <button
-            onClick={handleTodoEditSave}
-            className="border border-green-600 p-0.5"
-          >
-            Save
-          </button>
-          <button
-            onClick={() => {
-              setEditing(false);
-            }}
-            className="border border-black p-0.5"
-          >
-            Cancel
-          </button>
-        </>
+          <div>
+            <CButton onClick={handleTodoEditSave} type="submit">
+              💾
+            </CButton>
+            <CButton
+              onClick={() => {
+                setEditing(false);
+              }}
+            >
+              🗙
+            </CButton>
+          </div>
+        </form>
       )}
     </li>
   );
